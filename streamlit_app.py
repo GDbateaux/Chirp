@@ -4,7 +4,7 @@ import streamlit as st
 def get_top_n_elements_for_attribute(n: int, element:str, attribute: str, redis_db: redis.Redis) -> list[dict]:
 
     try:
-        top_elements_by_attribute = redis_db.zrevrange(attribute, 0, n)
+        top_elements_by_attribute = redis_db.zrevrange(attribute, 0, n-1)
 
         res: list[dict] = []
         for element_id in top_elements_by_attribute:
@@ -23,12 +23,10 @@ if __name__ == "__main__":
     st.markdown("""
         <style>
             body {
-                background-color: #f4f4f4;
                 font-family: 'Arial', sans-serif;
             }
             .title {
                 text-align: center;
-                color: white;
                 font-size: 36px;
                 font-weight: bold;
                 margin-bottom: 20px;
@@ -36,7 +34,6 @@ if __name__ == "__main__":
             .header {
                 font-size: 24px;
                 text-align: center;
-                color: white;
                 margin-top: 20px;
                 border-bottom: 2px solid #3498db;
                 padding-bottom: 5px;

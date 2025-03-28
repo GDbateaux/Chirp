@@ -11,7 +11,7 @@ if __name__ == '__main__':
     mode = sys.argv[1]
     
     if mode == "data":
-       subprocess.run(["python", f"{os.getcwd()}/create_data.py"])
+       subprocess.run([sys.executable,  f"{os.getcwd()}/create_data.py"])
     elif mode == "website":
         subprocess.run(["streamlit", "run", "./streamlit_app.py"])
     else:
