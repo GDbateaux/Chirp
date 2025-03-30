@@ -77,16 +77,16 @@ The data is stored in Redis using a key-value model optimized for fast retrieval
 
 To efficiently retrieve and rank data, the application utilizes Redis commands optimized for sorted sets and hashes:
 
-- **Retrieving User Data:**
 
-  - The application queries user profiles using `HGETALL user:<user_id>`.
 
-- **Fetching Recent Chirps:**
+- **Displaying the most Recent Chirps**:
+  - The latest 5 chirps are retrieved using `ZREVRANGE most_recent_chirps 0 4`, ensuring reverse chronological order. Each chirp’s details are then fetched using `HGETALL chirp:<chirp_id>`.
+  - When displaying chirps, the application retrieves the username of the author using `HGET user:<user_id> username`.
 
-  - Retrieving Recent Chirps: The latest 5 chirps are fetched using `ZREVRANGE most_recent_chirps 0 4 WITHSCORES`, ensuring reverse chronological orde
+- **Ranking Users by Followers and Chirps**:
 
-- **Ranking Users by Followers and Chirps:**
+  - The top 5 users by follower count are retrieved using `ZREVRANGE top_users_by_number_of_followers 0 4`
 
-  - The top 5 users by follower count are retrieved using `ZREVRANGE top_users_by_followers 0 4 WITHSCORES`.
-  - The top 5 users by number of chirps are retrieved using `ZREVRANGE top_users_by_chirps 0 4 WITHSCORES`.
-
+  - The top 5 users by number of chirps are retrieved using `ZREVRANGE top_users_by_number_of_chirp 0 4`
+ 
+  In both case, each users’ details are then fetched using `HGETALL user:<user_id>` 
